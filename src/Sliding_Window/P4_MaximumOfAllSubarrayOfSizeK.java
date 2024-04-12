@@ -1,6 +1,7 @@
 package Sliding_Window;
 
 import java.util.Arrays;
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -17,14 +18,14 @@ public class P4_MaximumOfAllSubarrayOfSizeK {
         int n=arr.length;
         int[] ans=new int[n-k+1];
         int maxElement=Integer.MIN_VALUE;
-        Queue<Integer> temp=new LinkedList<>();
+        Deque<Integer> temp=new LinkedList<>();
 
         int i=0,j=0;
 
         while (j<n){
 
-            while(!temp.isEmpty() && arr[j]> arr[temp.peek()]){
-                temp.poll();
+            while(!temp.isEmpty() && arr[j]> arr[temp.getLast()]){
+                temp.removeLast();
             }
 
             temp.add(j);
@@ -33,10 +34,10 @@ public class P4_MaximumOfAllSubarrayOfSizeK {
             if(j-i+1 < k) j++;
             else if(j-i+1 == k){
 
-                if(temp.peek()<i) temp.poll();
+                if(temp.getFirst()<i) temp.removeFirst();
 
 
-                ans[i]=arr[temp.peek()];
+                ans[i]=arr[temp.getFirst()];
 
                 i++;
                 j++;
